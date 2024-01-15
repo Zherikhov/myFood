@@ -15,19 +15,25 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+target
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# Compiled class file
+*.class
 
-### VS Code ###
-.vscode/
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# other
+*.properties

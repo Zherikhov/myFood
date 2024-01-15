@@ -4,29 +4,29 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "dishes")
 public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Getter
-    @Setter
     private int id;
 
     @Column(name = "complexity")
-    @Getter
-    @Setter
     private int complexity;
 
     @Column(name = "name_original")
-    @Getter
-    @Setter
     private String nameOriginal;
 
 //    @Column(name = "created")
 //    @Getter
 //    private String created;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_dish")
+    private Recipe recipe;
 
     public Dish() {
     }
