@@ -15,9 +15,16 @@ public class Ingredient {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "type")
-    private int type;
+    @OneToOne
+    @JoinColumn(name = "name_original")
+    private Translate nameOriginal;
 
-    @Column(name = "name_original")
-    private String nameOriginal;
+    @OneToOne(mappedBy = "ingredient")
+    private RecipeToIngredient recipeToIngredient;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_type")
+    private Type type;
+
+    public Ingredient() { }
 }

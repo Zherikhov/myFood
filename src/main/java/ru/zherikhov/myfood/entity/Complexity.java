@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Complexities")
+@Table(name = "complexities")
 public class Complexity {
 
     @Id
@@ -15,6 +15,9 @@ public class Complexity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name_original")
-    private String nameOriginal;
+    @OneToOne
+    @JoinColumn(name = "name_original")
+    private Translate nameOriginal;
+
+    public Complexity() { }
 }

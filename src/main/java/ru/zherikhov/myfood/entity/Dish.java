@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,26 +18,30 @@ public class Dish {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "complexity")
-    private int complexity;
+    @OneToOne
+    @JoinColumn(name = "name_original")
+    private Translate nameOriginal;
 
-    @Column(name = "name_original")
-    private String nameOriginal;
+    @Column(name = "created", nullable = false)
+    private Timestamp created;
 
-//    @Column(name = "created")
-//    @Getter
-//    private String created;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+    private List<Recipe> recipes;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_dish")
-    private Recipe recipe;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_complexity")
+    private Complexity complexity;
 
     public Dish() {
     }
 
-    public Dish(int complexity, String nameOriginal) {
-        this.complexity = complexity;
-        this.nameOriginal = nameOriginal;
+    public void addRecipeToDish(Recipe recipe) {
+        if (recipes == null) {
+            recipes = new ArrayList<>();
+        } else {
+            recipes.add(recipe);
+            recipe.setDish(this);
+        }
     }
 
     @Override
@@ -42,7 +50,6 @@ public class Dish {
                 "id=" + id +
                 ", complexity=" + complexity +
                 ", nameOriginal='" + nameOriginal + '\'' +
-//                ", created='" + created + '\'' +
                 '}';
     }
 }

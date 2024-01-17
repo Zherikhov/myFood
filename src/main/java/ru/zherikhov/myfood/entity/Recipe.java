@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -15,9 +17,23 @@ public class Recipe {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "id_dish")
-    private int idDish;
-
     @Column(name = "description", nullable = false)
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "id_dish", nullable = false)
+    private Dish dish;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private List<RecipeToIngredient> recipeToIngredients;
+
+    public Recipe() { }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

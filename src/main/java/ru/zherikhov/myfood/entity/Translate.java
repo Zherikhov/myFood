@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Types")
+@Table(name = "translate")
 public class Translate {
 
     @Id
@@ -23,4 +23,6 @@ public class Translate {
 
     @Column(name = "name_en")
     private String nameEn;
+
+    public Translate() { }
 }
