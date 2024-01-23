@@ -9,23 +9,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DishServiceImpl implements DishService{
+public class DishServiceImpl implements FoodService {
 
     @Autowired
     private DishRepository dishesRepository;
 
     @Override
-    public List<Dish> getAllDishes() {
+    public List<Dish> getAll() {
         return dishesRepository.findAll();
     }
 
     @Override
-    public void saveDish(Dish dish) {
-        dishesRepository.save(dish);
+    public void save(Object dish) {
+        dishesRepository.save((Dish) dish);
     }
 
     @Override
-    public Dish getDish(int id) {
+    public Dish getById(int id) {
         Dish dish = null;
         Optional<Dish> optionalDish = dishesRepository.findById(id);
 
@@ -36,7 +36,7 @@ public class DishServiceImpl implements DishService{
     }
 
     @Override
-    public void deleteDish(int id) {
+    public void deleteById(int id) {
         dishesRepository.deleteById(id);
     }
 }

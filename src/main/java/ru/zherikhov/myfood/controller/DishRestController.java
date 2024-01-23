@@ -1,44 +1,46 @@
 package ru.zherikhov.myfood.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import ru.zherikhov.myfood.entity.Dish;
-import ru.zherikhov.myfood.service.DishService;
+import ru.zherikhov.myfood.service.FoodService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class RESTController {
+public class DishRestController {
 
+    @Qualifier("dishServiceImpl")
     @Autowired
-    private DishService  dishService;
+    private FoodService foodService;
 
     @GetMapping("/dishes")
     public List<Dish> showAllDishes() {
-        return dishService.getAllDishes();
+        return foodService.getAll();
     }
 
     @GetMapping("/dish/{id}")
     public Dish getDish(@PathVariable int id) {
-        return dishService.getDish(id);
+        return (Dish) foodService.getById(id);
     }
 
     @PostMapping("/dish")
     public Dish addNewDish(@RequestBody Dish dish) {
-        dishService.saveDish(dish);
+        foodService.save(dish);
         return dish;
     }
 
     @PutMapping("/dish")
     public Dish updateDish(@RequestBody Dish dish) {
-        dishService.saveDish(dish);
+        foodService.save(dish);
         return dish;
     }
 
     @DeleteMapping("/dish/delete/{id}")
     public String deleteDish(@PathVariable int id) {
-        dishService.deleteDish(id);
+        foodService.deleteById(id);
         return "{Dish with ID = " + id + " was deleted}";
     }
 }
