@@ -41,6 +41,6 @@ public class DishRestController {
     @DeleteMapping("/dish/delete/{id}")
     public String deleteDish(@PathVariable int id) {
         foodService.deleteById(id);
-        return "{Dish with ID = " + id + " was deleted}";
+        return "[ Dish with ID = " + id + " was deleted ]";
     }
 }

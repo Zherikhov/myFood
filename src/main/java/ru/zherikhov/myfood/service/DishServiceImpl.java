@@ -20,8 +20,8 @@ public class DishServiceImpl implements FoodService {
     }
 
     @Override
-    public void save(Object dish) {
-        dishesRepository.save((Dish) dish);
+    public void save(Object value) {
+        dishesRepository.save((Dish) value);
     }
 
     @Override
