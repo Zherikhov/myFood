@@ -29,11 +29,11 @@ public class Recipe {
 
     public Recipe() { }
 
-    @Override
-    public String toString() {
-        return "Recipe{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Recipe{" +
+//                "id=" + id +
+//                ", description='" + description + '\'' +
+//                '}';
+//    }
 }

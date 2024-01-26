@@ -22,7 +22,7 @@ public class Ingredient {
     @OneToOne(mappedBy = "ingredient")
     private RecipeToIngredient recipeToIngredient;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_type")
     private Type type;
 

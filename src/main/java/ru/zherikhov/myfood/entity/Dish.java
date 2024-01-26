@@ -44,12 +44,12 @@ public class Dish {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Dish{" +
-                "id=" + id +
-                ", complexity=" + complexity +
-                ", nameOriginal='" + nameOriginal + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Dish{" +
+//                "id=" + id +
+//                ", complexity=" + complexity +
+//                ", nameOriginal='" + nameOriginal + '\'' +
+//                '}';
+//    }
 }
