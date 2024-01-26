@@ -1,6 +1,5 @@
 package ru.zherikhov.myfood.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.zherikhov.myfood.dao.TranslateRepository;
 import ru.zherikhov.myfood.entity.Translate;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class TranslateServiceImpl implements FoodService{
 
-    @Autowired
-    TranslateRepository translateRepository;
+    private final TranslateRepository translateRepository;
+
+    public TranslateServiceImpl(TranslateRepository translateRepository) {
+        this.translateRepository = translateRepository;
+    }
 
     @Override
     public List<Translate> getAll() {

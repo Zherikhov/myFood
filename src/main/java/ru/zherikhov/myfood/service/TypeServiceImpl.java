@@ -1,6 +1,5 @@
 package ru.zherikhov.myfood.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.zherikhov.myfood.dao.TypeRepository;
 import ru.zherikhov.myfood.entity.Type;
@@ -11,8 +10,11 @@ import java.util.Optional;
 @Service
 public class TypeServiceImpl implements FoodService {
 
-    @Autowired
-    private TypeRepository typeRepository;
+    private final TypeRepository typeRepository;
+
+    public TypeServiceImpl(TypeRepository typeRepository) {
+        this.typeRepository = typeRepository;
+    }
 
     @Override
     public List<Type> getAll() {

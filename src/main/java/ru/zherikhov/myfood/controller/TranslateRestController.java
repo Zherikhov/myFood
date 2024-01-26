@@ -3,7 +3,6 @@ package ru.zherikhov.myfood.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
-import ru.zherikhov.myfood.entity.Dish;
 import ru.zherikhov.myfood.entity.Translate;
 import ru.zherikhov.myfood.service.FoodService;
 

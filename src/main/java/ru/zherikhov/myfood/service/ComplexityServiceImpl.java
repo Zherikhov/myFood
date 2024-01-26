@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class ComplexityServiceImpl implements FoodService{
 
-    @Autowired
-    ComplexityRepository complexityRepository;
+    private final ComplexityRepository complexityRepository;
+
+    public ComplexityServiceImpl(ComplexityRepository complexityRepository) {
+        this.complexityRepository = complexityRepository;
+    }
 
     @Override
     public List<Complexity> getAll() {

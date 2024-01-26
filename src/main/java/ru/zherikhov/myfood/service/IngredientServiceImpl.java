@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class IngredientServiceImpl implements FoodService{
 
-    @Autowired
-    IngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
+
+    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
 
     @Override
     public List<Ingredient> getAll() {

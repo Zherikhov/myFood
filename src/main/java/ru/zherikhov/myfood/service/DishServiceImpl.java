@@ -11,8 +11,11 @@ import java.util.Optional;
 @Service
 public class DishServiceImpl implements FoodService {
 
-    @Autowired
-    private DishRepository dishesRepository;
+    private final DishRepository dishesRepository;
+
+    public DishServiceImpl(DishRepository dishesRepository) {
+        this.dishesRepository = dishesRepository;
+    }
 
     @Override
     public List<Dish> getAll() {
