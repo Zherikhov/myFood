@@ -13,9 +13,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class ComplexityRestController {
 
-    @Qualifier("complexityServiceImpl")
-    @Autowired
-    private FoodService foodService;
+    private final FoodService foodService;
+
+    public ComplexityRestController(@Qualifier("complexityServiceImpl") FoodService foodService) {
+        this.foodService = foodService;
+    }
 
     @GetMapping("/complexities")
     public List<Complexity> showAllComplexities() {

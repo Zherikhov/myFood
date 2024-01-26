@@ -12,9 +12,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class TranslateRestController {
 
-    @Qualifier("translateServiceImpl")
-    @Autowired
-    private FoodService foodService;
+    private final FoodService foodService;
+
+    public TranslateRestController(@Qualifier("translateServiceImpl") FoodService foodService) {
+        this.foodService = foodService;
+    }
 
     @GetMapping("/translates")
     public List<Translate> showAllTranslates() {

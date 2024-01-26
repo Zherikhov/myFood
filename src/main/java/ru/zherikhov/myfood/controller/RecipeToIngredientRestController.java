@@ -12,9 +12,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class RecipeToIngredientRestController {
 
-    @Qualifier("recipeToIngredientServiceImpl")
-    @Autowired
-    private FoodService foodService;
+    private final FoodService foodService;
+
+    public RecipeToIngredientRestController(@Qualifier("recipeToIngredientServiceImpl") FoodService foodService) {
+        this.foodService = foodService;
+    }
 
     @GetMapping("/recipeToIngredients")
     public List<RecipeToIngredient> showAllRecipeToIngredients() {

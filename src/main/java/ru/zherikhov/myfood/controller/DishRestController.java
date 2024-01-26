@@ -12,9 +12,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class DishRestController {
 
-    @Qualifier("dishServiceImpl")
-    @Autowired
-    private FoodService foodService;
+    private final FoodService foodService;
+
+    public DishRestController(@Qualifier("dishServiceImpl") FoodService foodService) {
+        this.foodService = foodService;
+    }
 
     @GetMapping("/dishes")
     public List<Dish> showAllDishes() {

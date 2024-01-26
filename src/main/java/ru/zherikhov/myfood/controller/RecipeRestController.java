@@ -13,9 +13,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class RecipeRestController {
 
-    @Qualifier("recipeServiceImpl")
-    @Autowired
-    private FoodService foodService;
+    private final FoodService foodService;
+
+    public RecipeRestController(@Qualifier("recipeServiceImpl") FoodService foodService) {
+        this.foodService = foodService;
+    }
 
     @GetMapping("/recipes")
     public List<Recipe> showAllRecipes() {
