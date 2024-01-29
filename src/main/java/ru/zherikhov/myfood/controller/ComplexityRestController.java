@@ -1,11 +1,10 @@
 package ru.zherikhov.myfood.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import ru.zherikhov.myfood.dto.ComplexityDTO;
 import ru.zherikhov.myfood.entity.Complexity;
-import ru.zherikhov.myfood.entity.Translate;
-import ru.zherikhov.myfood.service.FoodService;
+import ru.zherikhov.myfood.service.ComplexityService;
 
 import java.util.List;
 
@@ -13,37 +12,37 @@ import java.util.List;
 @RequestMapping("/api")
 public class ComplexityRestController {
 
-    private final FoodService foodService;
+    private final ComplexityService complexityService;
 
-    public ComplexityRestController(@Qualifier("complexityServiceImpl") FoodService foodService) {
-        this.foodService = foodService;
+    public ComplexityRestController(@Qualifier("complexityService") ComplexityService foodService) {
+        this.complexityService = foodService;
     }
 
     @GetMapping("/complexities")
-    public List<Complexity> showAllComplexities() {
-        return foodService.getAll();
+    public List<ComplexityDTO> showAllComplexities() {
+        return complexityService.getAll().stream().map(ComplexityDTO::from).toList();
     }
 
     @GetMapping("/complexity/{id}")
-    public Complexity getComplexity(@PathVariable int id) {
-        return (Complexity) foodService.getById(id);
+    public ComplexityDTO getComplexity(@PathVariable int id) {
+        return ComplexityDTO.from(complexityService.getById(id));
     }
 
     @PostMapping("/complexity")
-    public Complexity addNewComplexity(@RequestBody Complexity complexity) {
-        foodService.save(complexity);
-        return complexity;
+    public ComplexityDTO addNewComplexity(@RequestBody Complexity complexity) {
+        complexityService.save(complexity);
+        return ComplexityDTO.from(complexity);
     }
 
     @PutMapping("/complexity")
-    public Complexity updateComplexity(@RequestBody Complexity complexity) {
-        foodService.save(complexity);
-        return complexity;
+    public ComplexityDTO updateComplexity(@RequestBody Complexity complexity) {
+        complexityService.save(complexity);
+        return ComplexityDTO.from(complexity);
     }
 
     @DeleteMapping("/complexity/delete/{id}")
     public String deleteComplexity(@PathVariable int id) {
-        foodService.deleteById(id);
+        complexityService.deleteById(id);
         return "[ Complexity with ID = " + id + " was deleted ]";
     }
 }

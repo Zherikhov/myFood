@@ -2,8 +2,9 @@ package ru.zherikhov.myfood.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import ru.zherikhov.myfood.dto.RecipeDTO;
 import ru.zherikhov.myfood.entity.Recipe;
-import ru.zherikhov.myfood.service.FoodService;
+import ru.zherikhov.myfood.service.RecipeService;
 
 import java.util.List;
 
@@ -11,37 +12,37 @@ import java.util.List;
 @RequestMapping("/api")
 public class RecipeRestController {
 
-    private final FoodService foodService;
+    private final RecipeService recipeService;
 
-    public RecipeRestController(@Qualifier("recipeServiceImpl") FoodService foodService) {
-        this.foodService = foodService;
+    public RecipeRestController(@Qualifier("recipeService") RecipeService foodService) {
+        this.recipeService = foodService;
     }
 
     @GetMapping("/recipes")
-    public List<Recipe> showAllRecipes() {
-        return foodService.getAll();
+    public List<RecipeDTO> showAllRecipes() {
+        return recipeService.getAll().stream().map(RecipeDTO::from).toList();
     }
 
     @GetMapping("/recipe/{id}")
-    public Recipe getRecipe(@PathVariable int id) {
-        return (Recipe) foodService.getById(id);
+    public RecipeDTO getRecipe(@PathVariable int id) {
+        return RecipeDTO.from(recipeService.getById(id));
     }
 
     @PostMapping("/recipe")
-    public Recipe addNewRecipe(@RequestBody Recipe recipe) {
-        foodService.save(recipe);
-        return recipe;
+    public RecipeDTO addNewRecipe(@RequestBody Recipe recipe) {
+        recipeService.save(recipe);
+        return RecipeDTO.from(recipe);
     }
 
     @PutMapping("/recipe")
-    public Recipe updateRecipe(@RequestBody Recipe recipe) {
-        foodService.save(recipe);
-        return recipe;
+    public RecipeDTO updateRecipe(@RequestBody Recipe recipe) {
+        recipeService.save(recipe);
+        return RecipeDTO.from(recipe);
     }
 
     @DeleteMapping("/recipe/delete/{id}")
     public String deleteRecipe(@PathVariable int id) {
-        foodService.deleteById(id);
+        recipeService.deleteById(id);
         return "[ Recipe with ID = " + id + " was deleted ]";
     }
 }

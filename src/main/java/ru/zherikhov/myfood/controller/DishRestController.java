@@ -1,10 +1,10 @@
 package ru.zherikhov.myfood.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import ru.zherikhov.myfood.dto.DishDTO;
 import ru.zherikhov.myfood.entity.Dish;
-import ru.zherikhov.myfood.service.FoodService;
+import ru.zherikhov.myfood.service.DishService;
 
 import java.util.List;
 
@@ -12,37 +12,37 @@ import java.util.List;
 @RequestMapping("/api")
 public class DishRestController {
 
-    private final FoodService foodService;
+    private final DishService dishService;
 
-    public DishRestController(@Qualifier("dishServiceImpl") FoodService foodService) {
-        this.foodService = foodService;
+    public DishRestController(@Qualifier("dishService") DishService foodService) {
+        this.dishService = foodService;
     }
 
     @GetMapping("/dishes")
-    public List<Dish> showAllDishes() {
-        return foodService.getAll();
+    public List<DishDTO> showAllDishesDTO() {
+        return dishService.getAll().stream().map(DishDTO::from).toList();
     }
 
     @GetMapping("/dish/{id}")
-    public Dish getDish(@PathVariable int id) {
-        return (Dish) foodService.getById(id);
+    public DishDTO getDish(@PathVariable int id) {
+        return DishDTO.from(dishService.getById(id));
     }
 
     @PostMapping("/dish")
-    public Dish addNewDish(@RequestBody Dish dish) {
-        foodService.save(dish);
-        return dish;
+    public DishDTO addNewDish(@RequestBody Dish dish) {
+        dishService.save(dish);
+        return DishDTO.from(dish);
     }
 
     @PutMapping("/dish")
-    public Dish updateDish(@RequestBody Dish dish) {
-        foodService.save(dish);
-        return dish;
+    public DishDTO updateDish(@RequestBody Dish dish) {
+        dishService.save(dish);
+        return DishDTO.from(dish);
     }
 
     @DeleteMapping("/dish/delete/{id}")
     public String deleteDish(@PathVariable int id) {
-        foodService.deleteById(id);
+        dishService.deleteById(id);
         return "[ Dish with ID = " + id + " was deleted ]";
     }
 }

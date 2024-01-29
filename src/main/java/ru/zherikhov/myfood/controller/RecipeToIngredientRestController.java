@@ -2,8 +2,9 @@ package ru.zherikhov.myfood.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import ru.zherikhov.myfood.dto.RecipeToIngredientDTO;
 import ru.zherikhov.myfood.entity.RecipeToIngredient;
-import ru.zherikhov.myfood.service.FoodService;
+import ru.zherikhov.myfood.service.RecipeToIngredientService;
 
 import java.util.List;
 
@@ -11,37 +12,37 @@ import java.util.List;
 @RequestMapping("/api")
 public class RecipeToIngredientRestController {
 
-    private final FoodService foodService;
+    private final RecipeToIngredientService recipeToIngredientService;
 
-    public RecipeToIngredientRestController(@Qualifier("recipeToIngredientServiceImpl") FoodService foodService) {
-        this.foodService = foodService;
+    public RecipeToIngredientRestController(@Qualifier("recipeToIngredientService") RecipeToIngredientService foodService) {
+        this.recipeToIngredientService = foodService;
     }
 
     @GetMapping("/recipeToIngredients")
-    public List<RecipeToIngredient> showAllRecipeToIngredients() {
-        return foodService.getAll();
+    public List<RecipeToIngredientDTO> showAllRecipeToIngredients() {
+        return recipeToIngredientService.getAll().stream().map(RecipeToIngredientDTO::from).toList();
     }
 
     @GetMapping("/recipeToIngredient/{id}")
-    public RecipeToIngredient getRecipeToIngredient(@PathVariable int id) {
-        return (RecipeToIngredient) foodService.getById(id);
+    public RecipeToIngredientDTO getRecipeToIngredient(@PathVariable int id) {
+        return RecipeToIngredientDTO.from(recipeToIngredientService.getById(id));
     }
 
     @PostMapping("/recipeToIngredient")
-    public RecipeToIngredient addNewRecipeToIngredient(@RequestBody RecipeToIngredient recipeToIngredient) {
-        foodService.save(recipeToIngredient);
-        return recipeToIngredient;
+    public RecipeToIngredientDTO addNewRecipeToIngredient(@RequestBody RecipeToIngredient recipeToIngredient) {
+        recipeToIngredientService.save(recipeToIngredient);
+        return RecipeToIngredientDTO.from(recipeToIngredient);
     }
 
     @PutMapping("/recipeToIngredient")
-    public RecipeToIngredient updateRecipeToIngredient(@RequestBody RecipeToIngredient recipeToIngredient) {
-        foodService.save(recipeToIngredient);
-        return recipeToIngredient;
+    public RecipeToIngredientDTO updateRecipeToIngredient(@RequestBody RecipeToIngredient recipeToIngredient) {
+        recipeToIngredientService.save(recipeToIngredient);
+        return RecipeToIngredientDTO.from(recipeToIngredient);
     }
 
     @DeleteMapping("/recipeToIngredient/delete/{id}")
     public String deleteRecipe(@PathVariable int id) {
-        foodService.deleteById(id);
+        recipeToIngredientService.deleteById(id);
         return "[ RecipeToIngredient with ID = " + id + " was deleted ]";
     }
 }

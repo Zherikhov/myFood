@@ -8,25 +8,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TypeServiceImpl implements FoodService {
+public class TypeService {
 
     private final TypeRepository typeRepository;
 
-    public TypeServiceImpl(TypeRepository typeRepository) {
+    public TypeService(TypeRepository typeRepository) {
         this.typeRepository = typeRepository;
     }
 
-    @Override
     public List<Type> getAll() {
         return typeRepository.findAll();
     }
 
-    @Override
     public void save(Object type) {
         typeRepository.save((Type) type);
     }
 
-    @Override
     public Type getById(int id) {
         Type type = null;
         Optional<Type> optionalType = typeRepository.findById(id);
@@ -37,7 +34,6 @@ public class TypeServiceImpl implements FoodService {
         return type;
     }
 
-    @Override
     public void deleteById(int id) {
         typeRepository.deleteById(id);
     }

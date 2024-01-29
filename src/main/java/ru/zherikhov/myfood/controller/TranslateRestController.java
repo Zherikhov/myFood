@@ -3,7 +3,7 @@ package ru.zherikhov.myfood.controller;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import ru.zherikhov.myfood.entity.Translate;
-import ru.zherikhov.myfood.service.FoodService;
+import ru.zherikhov.myfood.service.TranslateService;
 
 import java.util.List;
 
@@ -11,37 +11,37 @@ import java.util.List;
 @RequestMapping("/api")
 public class TranslateRestController {
 
-    private final FoodService foodService;
+    private final TranslateService translateService;
 
-    public TranslateRestController(@Qualifier("translateServiceImpl") FoodService foodService) {
-        this.foodService = foodService;
+    public TranslateRestController(@Qualifier("translateService") TranslateService foodService) {
+        this.translateService = foodService;
     }
 
     @GetMapping("/translates")
     public List<Translate> showAllTranslates() {
-        return foodService.getAll();
+        return translateService.getAll();
     }
 
     @GetMapping("/translate/{id}")
     public Translate getTranslate(@PathVariable int id) {
-        return (Translate) foodService.getById(id);
+        return translateService.getById(id);
     }
 
     @PostMapping("/translate")
     public Translate addNewTranslate(@RequestBody Translate translate) {
-        foodService.save(translate);
+        translateService.save(translate);
         return translate;
     }
 
     @PutMapping("/translate")
     public Translate updateTranslate(@RequestBody Translate translate) {
-        foodService.save(translate);
+        translateService.save(translate);
         return translate;
     }
 
     @DeleteMapping("/translate/delete/{id}")
     public String deleteTranslate(@PathVariable int id) {
-        foodService.deleteById(id);
+        translateService.deleteById(id);
         return "[ Translate with ID = " + id + " was deleted ]";
     }
 }

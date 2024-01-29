@@ -1,6 +1,5 @@
 package ru.zherikhov.myfood.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.zherikhov.myfood.dao.RecipeToIngredientRepository;
 import ru.zherikhov.myfood.entity.RecipeToIngredient;
@@ -9,26 +8,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RecipeToIngredientServiceImpl implements FoodService{
+public class RecipeToIngredientService {
 
     private final RecipeToIngredientRepository recipeToIngredientRepository;
 
-    public RecipeToIngredientServiceImpl(RecipeToIngredientRepository recipeToIngredientRepository) {
+    public RecipeToIngredientService(RecipeToIngredientRepository recipeToIngredientRepository) {
         this.recipeToIngredientRepository = recipeToIngredientRepository;
     }
 
-    @Override
     public List<RecipeToIngredient> getAll() {
         return recipeToIngredientRepository.findAll();
     }
 
-    @Override
-    public void save(Object value) {
-        recipeToIngredientRepository.save((RecipeToIngredient) value);
+    public void save(RecipeToIngredient value) {
+        recipeToIngredientRepository.save(value);
     }
 
-    @Override
-    public Object getById(int id) {
+    public RecipeToIngredient getById(int id) {
         RecipeToIngredient recipeToIngredient = null;
         Optional<RecipeToIngredient> optionalRecipeToIngredient = recipeToIngredientRepository.findById(id);
 
@@ -38,7 +34,6 @@ public class RecipeToIngredientServiceImpl implements FoodService{
         return recipeToIngredient;
     }
 
-    @Override
     public void deleteById(int id) {
         recipeToIngredientRepository.deleteById(id);
     }

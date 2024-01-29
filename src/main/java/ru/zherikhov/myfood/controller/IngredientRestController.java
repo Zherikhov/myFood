@@ -1,10 +1,10 @@
 package ru.zherikhov.myfood.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+import ru.zherikhov.myfood.dto.IngredientDTO;
 import ru.zherikhov.myfood.entity.Ingredient;
-import ru.zherikhov.myfood.service.FoodService;
+import ru.zherikhov.myfood.service.IngredientService;
 
 import java.util.List;
 
@@ -12,37 +12,37 @@ import java.util.List;
 @RequestMapping("/api")
 public class IngredientRestController {
 
-    private final FoodService foodService;
+    private final IngredientService ingredientService;
 
-    public IngredientRestController(@Qualifier("ingredientServiceImpl") FoodService foodService) {
-        this.foodService = foodService;
+    public IngredientRestController(@Qualifier("ingredientService") IngredientService foodService) {
+        this.ingredientService = foodService;
     }
 
     @GetMapping("/ingredients")
-    public List<Ingredient> showAllIngredients() {
-        return foodService.getAll();
+    public List<IngredientDTO> showAllIngredients() {
+        return ingredientService.getAll().stream().map(IngredientDTO::from).toList();
     }
 
     @GetMapping("/ingredient/{id}")
-    public Ingredient getIngredient(@PathVariable int id) {
-        return (Ingredient) foodService.getById(id);
+    public IngredientDTO getIngredient(@PathVariable int id) {
+        return IngredientDTO.from(ingredientService.getById(id));
     }
 
     @PostMapping("/ingredient")
-    public Ingredient addNewIngredient(@RequestBody Ingredient ingredient) {
-        foodService.save(ingredient);
-        return ingredient;
+    public IngredientDTO addNewIngredient(@RequestBody Ingredient ingredient) {
+        ingredientService.save(ingredient);
+        return IngredientDTO.from(ingredient);
     }
 
     @PutMapping("/ingredient")
-    public Ingredient updateIngredient(@RequestBody Ingredient ingredient) {
-        foodService.save(ingredient);
-        return ingredient;
+    public IngredientDTO updateIngredient(@RequestBody Ingredient ingredient) {
+        ingredientService.save(ingredient);
+        return IngredientDTO.from(ingredient);
     }
 
     @DeleteMapping("/ingredient/delete/{id}")
     public String deleteIngredient(@PathVariable int id) {
-        foodService.deleteById(id);
+        ingredientService.deleteById(id);
         return "[ Ingredient with ID = " + id + " was deleted ]";
     }
 }

@@ -8,26 +8,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TranslateServiceImpl implements FoodService{
+public class TranslateService {
 
     private final TranslateRepository translateRepository;
 
-    public TranslateServiceImpl(TranslateRepository translateRepository) {
+    public TranslateService(TranslateRepository translateRepository) {
         this.translateRepository = translateRepository;
     }
 
-    @Override
     public List<Translate> getAll() {
         return translateRepository.findAll();
     }
 
-    @Override
-    public void save(Object value) {
-        translateRepository.save((Translate) value);
+    public void save(Translate value) {
+        translateRepository.save(value);
     }
 
-    @Override
-    public Object getById(int id) {
+    public Translate getById(int id) {
         Translate translate = null;
         Optional<Translate> optionalTranslate = translateRepository.findById(id);
 
@@ -37,7 +34,6 @@ public class TranslateServiceImpl implements FoodService{
         return translate;
     }
 
-    @Override
     public void deleteById(int id) {
         translateRepository.deleteById(id);
     }
